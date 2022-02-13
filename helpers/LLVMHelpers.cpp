@@ -56,6 +56,18 @@ extern "C" __attribute__((always_inline)) uint64_t __remill_read_memory_64(Memor
   return v;
 }
 
+extern "C" __attribute__((always_inline)) float __remill_read_memory_f32(Memory *m, size_t a) {
+  float v = 0;
+  std::memcpy(&v, &RAM[a], sizeof(v));
+  return v;
+}
+
+extern "C" __attribute__((always_inline)) double __remill_read_memory_f64(Memory *m, size_t a) {
+  double v = 0;
+  std::memcpy(&v, &RAM[a], sizeof(v));
+  return v;
+}
+
 extern "C" __attribute__((always_inline)) uint8_t __remill_read_stack_8(Memory *m, size_t a) {
   uint8_t v = 0;
   std::memcpy(&v, &STACK[a], sizeof(v));
@@ -248,6 +260,16 @@ extern "C" __attribute__((always_inline)) Memory *__remill_write_memory_32(Memor
 }
 
 extern "C" __attribute__((always_inline)) Memory *__remill_write_memory_64(Memory *m, size_t a, uint64_t v) {
+  std::memcpy(&RAM[a], &v, sizeof(v));
+  return m;
+}
+
+extern "C" __attribute__((always_inline)) Memory *__remill_write_memory_f32(Memory *m, size_t a, float v) {
+  std::memcpy(&RAM[a], &v, sizeof(v));
+  return m;
+}
+
+extern "C" __attribute__((always_inline)) Memory *__remill_write_memory_f64(Memory *m, size_t a, double v) {
   std::memcpy(&RAM[a], &v, sizeof(v));
   return m;
 }

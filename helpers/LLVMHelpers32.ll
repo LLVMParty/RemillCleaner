@@ -50,6 +50,24 @@ entry:
 }
 
 ; Function Attrs: alwaysinline mustprogress nofree norecurse nosync nounwind readonly willreturn
+define dso_local float @__remill_read_memory_f32(%struct.Memory* nocapture readnone %m, i32 %a) local_unnamed_addr #0 {
+entry:
+  %arrayidx = getelementptr inbounds [0 x i8], [0 x i8]* @RAM, i32 0, i32 %a
+  %v.0.arrayidx.sroa_cast = bitcast i8* %arrayidx to float*
+  %v.0.copyload = load float, float* %v.0.arrayidx.sroa_cast, align 1
+  ret float %v.0.copyload
+}
+
+; Function Attrs: alwaysinline mustprogress nofree norecurse nosync nounwind readonly willreturn
+define dso_local double @__remill_read_memory_f64(%struct.Memory* nocapture readnone %m, i32 %a) local_unnamed_addr #0 {
+entry:
+  %arrayidx = getelementptr inbounds [0 x i8], [0 x i8]* @RAM, i32 0, i32 %a
+  %v.0.arrayidx.sroa_cast = bitcast i8* %arrayidx to double*
+  %v.0.copyload = load double, double* %v.0.arrayidx.sroa_cast, align 1
+  ret double %v.0.copyload
+}
+
+; Function Attrs: alwaysinline mustprogress nofree norecurse nosync nounwind readonly willreturn
 define dso_local zeroext i8 @__remill_read_stack_8(%struct.Memory* nocapture readnone %m, i32 %a) local_unnamed_addr #0 {
 entry:
   %arrayidx = getelementptr inbounds [0 x i8], [0 x i8]* @STACK, i32 0, i32 %a
@@ -326,6 +344,24 @@ entry:
   %arrayidx = getelementptr inbounds [0 x i8], [0 x i8]* @RAM, i32 0, i32 %a
   %v.addr.0.arrayidx.sroa_cast = bitcast i8* %arrayidx to i64*
   store i64 %v, i64* %v.addr.0.arrayidx.sroa_cast, align 1
+  ret %struct.Memory* %m
+}
+
+; Function Attrs: alwaysinline mustprogress nofree norecurse nosync nounwind willreturn writeonly
+define dso_local %struct.Memory* @__remill_write_memory_f32(%struct.Memory* readnone returned %m, i32 %a, float %v) local_unnamed_addr #2 {
+entry:
+  %arrayidx = getelementptr inbounds [0 x i8], [0 x i8]* @RAM, i32 0, i32 %a
+  %v.addr.0.arrayidx.sroa_cast = bitcast i8* %arrayidx to float*
+  store float %v, float* %v.addr.0.arrayidx.sroa_cast, align 1
+  ret %struct.Memory* %m
+}
+
+; Function Attrs: alwaysinline mustprogress nofree norecurse nosync nounwind willreturn writeonly
+define dso_local %struct.Memory* @__remill_write_memory_f64(%struct.Memory* readnone returned %m, i32 %a, double %v) local_unnamed_addr #2 {
+entry:
+  %arrayidx = getelementptr inbounds [0 x i8], [0 x i8]* @RAM, i32 0, i32 %a
+  %v.addr.0.arrayidx.sroa_cast = bitcast i8* %arrayidx to double*
+  store double %v, double* %v.addr.0.arrayidx.sroa_cast, align 1
   ret %struct.Memory* %m
 }
 
